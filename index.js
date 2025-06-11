@@ -26,6 +26,27 @@ app.post('/telegram-bot', (req, res) => res.send('All OK'));
 // Add your bot commands below in this section
 bot.command('start', (ctx) => {
     ctx.reply('Welcome!');
+    ctx.reply(
+        `¡Hola ${ctx.from.first_name || 'usuario'}! 👋\n\n` +
+        'Bienvenido al bot de cámaras de tráfico de Bilbao. Con este bot puedes consultar imágenes en directo de las cámaras de tráfico de la ciudad.🚦\n\n' +
+        'Comandos disponibles:\n' +
+        '/start - Mostrar este mensaje de bienvenida\n' +
+        '/help - Mostrar ayuda y comandos\n' +
+        '/all - Listar todas las cámaras disponibles\n\n' +
+        'También puedes:\n' +
+        '• Escribir el nombre de una cámara para buscarla\n' +
+        '• Escribir el ID de una cámara (por ejemplo, /4222) para ver su localización y la imagen en directo'
+    );
+});
+
+bot.command('help', (ctx) => {
+    ctx.reply('Comandos disponibles:\n' +
+        '/start - Mostrar este mensaje de bienvenida\n' +
+        '/help - Mostrar ayuda y comandos\n' +
+        '/all - Listar todas las cámaras disponibles\n\n' +
+        'También puedes:\n' +
+        '• Escribir el nombre de una cámara para buscarla\n' +
+        '• Escribir el ID de una cámara (por ejemplo, /4222) para ver su localización y la imagen en directo');
 });
 
 bot.command('all', async (ctx) => {

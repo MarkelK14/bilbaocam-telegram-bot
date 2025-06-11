@@ -24,6 +24,7 @@ BilbaoCam Telegram Bot is a Node.js application that allows users to interact wi
 
 ```
 /start
+/help
 /all
 Plaza Euskadi (Museo Bellas Artes)
 /4081

@@ -10,8 +10,8 @@ const camSchema = new Schema({
     texto_spa: String,
     camid: String,
     geometry: {
-        latitude: String,
-        longitude: String,
+        latitude: Number,
+        longitude: Number,
     },
     url: String,
 }, {

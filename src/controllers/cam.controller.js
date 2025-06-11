@@ -10,9 +10,27 @@ const getAllCamNames = async () => {
     }
 }
 
+const getCamsByName = async (name) => {
+    try {
+        // const cams = await Cam.find({ nombre: new RegExp(name, 'i') }); // case-insensitive search
+        const cams = await Cam.find({});
+        const normalizado = quitarTildes(name).toLowerCase();
+        const filtrados = cams.filter(cam =>
+            quitarTildes(cam.nombre).toLowerCase().includes(normalizado)
+        );
+        return filtrados;
+    } catch (error) {
+        console.error('Error buscando cams:', error);
+        return null;
+    }
+};
+
 const getCamById = async (id) => {
     try {
         const cam = await Cam.findOne({ id });
+        console.log('-----------------------------------------------------------------');
+        console.log(cam);
+        console.log('-----------------------------------------------------------------');
         return cam;
     }
     catch (error) {
@@ -46,8 +64,13 @@ const getCamImageById = async (id) => {
     }
 }
 
+const quitarTildes = (texto) =>{
+    return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 module.exports = {
     getAllCamNames,
+    getCamsByName,
     getCamById,
     getCamImageById
 };

@@ -1,7 +1,7 @@
 // Import necessary modules
 const express = require('express');
 const { Telegraf } = require('telegraf');
-const { getAllCamNames, getCamById, getCamImageById } = require('./src/controllers/cam.controller');
+const { getAllCamNames, getCamById, getCamImageById, getCamsByName } = require('./src/controllers/cam.controller');
 
 // Load environment variables
 require('dotenv').config();
@@ -46,11 +46,30 @@ bot.hears(/^\/(\d+)$/, async (ctx) => {
 
     const buffer = await getCamImageById(camId);
     if (buffer) {
+        await ctx.replyWithLocation(
+            cam.geometry.latitude,
+            cam.geometry.longitude
+        );
         await ctx.replyWithPhoto({ source: buffer });
     } else {
         ctx.reply('No se pudo obtener la imagen de la cámara.');
     }
-    ctx.reply('Ejecutado');
+});
+
+bot.on('text', async (ctx) => {
+    const mensaje = ctx.message.text;
+    if (!mensaje.startsWith('/')) {
+        const cams = await getCamsByName(mensaje);
+        console.log(cams);
+        if (cams.length > 0) {
+            ctx.reply(
+                "Ahí van algunas cámaras que coinciden con tu búsqueda:\n\n" +
+                cams.map(cam => `   · ${cam.nombre} /${cam.id}`).join('\n')
+            );
+        } else {
+            ctx.reply('No se encontraron cámaras con ese nombre.');
+        }
+    }
 });
 
 // Start the server on the specified port

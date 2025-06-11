@@ -51,7 +51,6 @@ bot.command('help', (ctx) => {
 
 bot.command('all', async (ctx) => {
     const cams = await getAllCamNames();
-    console.log(cams);
     const lines = cams.map(cam => `${cam.nombre} /${cam.id}`);
     let message = '';
     for (const line of lines) {
@@ -93,7 +92,6 @@ bot.on('text', async (ctx) => {
     const mensaje = ctx.message.text;
     if (!mensaje.startsWith('/')) {
         const cams = await getCamsByName(mensaje);
-        console.log(cams);
         if (cams.length > 0) {
             ctx.reply(
                 "Ahí van algunas cámaras que coinciden con tu búsqueda:\n\n" +

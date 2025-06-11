@@ -12,7 +12,8 @@ const camSchema = new Schema({
     geometry: {
         latitude: String,
         longitude: String,
-    }
+    },
+    url: String,
 }, {
     timestamps: true, // Automatically adds createdAt and updatedAt fields
     versionKey: false, // Disables the __v field

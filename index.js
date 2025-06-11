@@ -75,14 +75,14 @@ bot.hears(/^\/(\d+)$/, async (ctx) => {
         return;
     }
     ctx.reply(`Cámara ${cam.nombre}`);
-    ctx.reply(cam.googleMapsUrl);
+    // ctx.reply(cam.googleMapsUrl);
 
     const buffer = await getCamImageById(camId);
     if (buffer) {
-        // await ctx.replyWithLocation(
-        //     cam.geometry.latitude,
-        //     cam.geometry.longitude
-        // );
+        await ctx.replyWithLocation(
+            cam.geometry.latitude,
+            cam.geometry.longitude
+        );
         await ctx.replyWithPhoto({ source: buffer });
     } else {
         ctx.reply('No se pudo obtener la imagen de la cámara.');

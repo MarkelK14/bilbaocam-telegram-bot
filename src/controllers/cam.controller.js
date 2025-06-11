@@ -28,9 +28,6 @@ const getCamsByName = async (name) => {
 const getCamById = async (id) => {
     try {
         const cam = await Cam.findOne({ id });
-        console.log('-----------------------------------------------------------------');
-        console.log(cam);
-        console.log('-----------------------------------------------------------------');
         return cam;
     }
     catch (error) {

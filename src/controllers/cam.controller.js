@@ -1,4 +1,3 @@
-const { time } = require('console');
 const Cam = require('../models/cam.model.js');
 const Requests = require('../models/request.model.js');
 const https = require('https');

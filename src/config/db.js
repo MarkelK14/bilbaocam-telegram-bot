@@ -1,3 +1,3 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.en.MONGODB_CONNECT_URI);
+mongoose.connect(process.env.MONGODB_CONNECT_URI);

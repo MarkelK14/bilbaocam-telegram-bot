@@ -13,9 +13,9 @@ const camSchema = new Schema({
         latitude: Number,
         longitude: Number,
     },
-    url: String,
+    url: String
 }, {
-    timestamps: true, // Automatically adds createdAt and updatedAt fields
+    timestamps: false, // Automatically adds createdAt and updatedAt fields
     versionKey: false, // Disables the __v field
 });
 

@@ -28,6 +28,7 @@ const getCamsByName = async (name) => {
 const getCamById = async (id) => {
     try {
         const cam = await Cam.findOne({ id });
+        cam.googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${cam.geometry.latitude},${cam.geometry.longitude}`;
         return cam;
     }
     catch (error) {

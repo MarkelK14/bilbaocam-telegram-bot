@@ -29,9 +29,20 @@ bot.command('start', (ctx) => {
 });
 
 bot.command('all', async (ctx) => {
-    ctx.reply('This is a command to get all items.');
     const cams = await getAllCamNames();
-    await ctx.reply(cams.map(cam => `${cam.nombre} /${cam.id}`).join('\n'));
+    console.log(cams);
+    const lines = cams.map(cam => `${cam.nombre} /${cam.id}`);
+    let message = '';
+    for (const line of lines) {
+        if ((message + line + '\n').length > 4000) {
+            await ctx.reply(message);
+            message = '';
+        }
+        message += line + '\n';
+    }
+    if (message) {
+        await ctx.reply(message);
+    }
 });
 
 bot.hears(/^\/(\d+)$/, async (ctx) => {
@@ -43,13 +54,14 @@ bot.hears(/^\/(\d+)$/, async (ctx) => {
         return;
     }
     ctx.reply(`Cámara ${cam.nombre}`);
+    ctx.reply(cam.googleMapsUrl);
 
     const buffer = await getCamImageById(camId);
     if (buffer) {
-        await ctx.replyWithLocation(
-            cam.geometry.latitude,
-            cam.geometry.longitude
-        );
+        // await ctx.replyWithLocation(
+        //     cam.geometry.latitude,
+        //     cam.geometry.longitude
+        // );
         await ctx.replyWithPhoto({ source: buffer });
     } else {
         ctx.reply('No se pudo obtener la imagen de la cámara.');

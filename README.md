@@ -46,9 +46,7 @@ Plaza Euskadi (Museo Bellas Artes)
    ```env
    BOT_TOKEN="your_telegram_bot_token"
    BOT_URL="https://your-server-url.com"
-   NODE_ENV="DEVELOPMENT" # or "PRODUCTION" (must be one of these values)
-   MONGO_DEVELOPMENT_URL="mongodb://localhost:27017/BilbaoCam"
-   MONGO_PRODUCTION_URL="your_production_mongodb_url"
+   MONGODB_CONNECT_URI="your_mongodb_connection_uri"
    ```
 4. **Start the bot:**
    ```sh

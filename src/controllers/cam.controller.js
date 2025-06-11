@@ -1,4 +1,6 @@
+const { time } = require('console');
 const Cam = require('../models/cam.model.js');
+const Requests = require('../models/request.model.js');
 const https = require('https');
 
 const getAllCamNames = async () => {
@@ -25,13 +27,59 @@ const getCamsByName = async (name) => {
     }
 };
 
-const getCamById = async (id) => {
+const getCamById = async (id, username) => {
     try {
         const cam = await Cam.findOne({ id });
         cam.googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${cam.geometry.latitude},${cam.geometry.longitude}`;
+
+        
+
+        // await Requests.create({
+        //     id: cam.id,
+        //     nombre: cam.nombre,
+        //     texto_spa: cam.nombre,
+        //     camid: cam.camid,
+        //     geometry: {
+        //         latitude: cam.geometry.latitude,
+        //         longitude: cam.geometry.longitude
+        //     },
+        //     url: cam.url,
+        //     google_maps_url: cam.googleMapsUrl
+        // });
+
+        // Busca si ya existe en Requests
+        const req = await Requests.findOne({ id });
+        if (req) {
+            // Si existe, actualiza
+            await Requests.updateOne(
+                { id },
+                {
+                    $inc: { request_count: 1 },
+                    $push: { requests: { requested_on: new Date() } }
+                }
+            );
+        } else {
+            // Si no existe, crea
+            await Requests.create({
+                id: cam.id,
+                nombre: cam.nombre,
+                texto_spa: cam.nombre,
+                camid: cam.camid,
+                geometry: {
+                    latitude: cam.geometry.latitude,
+                    longitude: cam.geometry.longitude
+                },
+                url: cam.url,
+                google_maps_url: cam.googleMapsUrl,
+                request_count: 1,
+                requests: [{ requested_on: new Date() }]
+            });
+        }
+
         return cam;
     }
     catch (error) {
+        console.error('Error buscando cam por ID:', error);
         return null;
     }
 }

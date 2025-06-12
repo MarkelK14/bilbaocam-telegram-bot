@@ -95,7 +95,7 @@ bot.on('text', async (ctx) => {
         if (cams.length > 0) {
             ctx.reply(
                 "Ahí van algunas cámaras que coinciden con tu búsqueda:\n\n" +
-                cams.map(cam => `   · ${cam.nombre} /${cam.id}`).join('\n')
+                cams.map(cam => `- ${cam.nombre} /${cam.id}\n`)
             );
         } else {
             ctx.reply('No se encontraron cámaras con ese nombre.');
